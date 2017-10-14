@@ -1,4 +1,5 @@
 const { MyEventEmitter } = require('./my_event_emitter.js');
+const Promise = require('es6-promise-promise');
 /* 
     100px = 1m;
  */
@@ -23,15 +24,17 @@ class BilliardElement extends MyEventEmitter {
         style.position = 'fixed';
         style.top = "0px";
         style.left = "0px";
-        this.params = {
+        this._params = {
             x: 200,
             y: 200,
-            speed: 5000,
+            contentWidth: this.contentWidth,
+            contentHeight: this.contentHeight,
+            speed: 0,
             frictionSpeed: 300,
             moveAngle: 197,
             FS: 60,
-            contentWidth: this.contentWidth,
-            contentHeight: this.contentHeight
+            autoAttractedByWall: true,
+            attractSpeed: 400
         };
         this._moveStart = false;
         el.addEventListener('mousedown',res=>{
@@ -46,29 +49,36 @@ class BilliardElement extends MyEventEmitter {
             this._moveStart = false;
             this.emit('mouseup');
         });
-        this._start();
+        this.launchBilliard(3000);
     }
-    _move(x, y) {
-        this._el.style.WebkitTransform = "translate(" + this._translateX + "px," + this._translateY + 'px)';
+    launchBilliard(speed) {
+        this._params.speed = speed;
+        let animations = this._getAnimations(res=>{
+            return this._getNextFsMoveInfo(this._params);
+        });
+        return this._startAnimation(animations);
     }
-    _start() {
-        this.setAnimation();
-        this._interval = setInterval(()=>{
-            const coorChange = this.getAnimation();
-            if(!coorChange) {
-                clearInterval(this._interval);
-                this.emit('billardMoveEnd');
-                return;
-            };
-            this._el.style.WebkitTransform = "translate(" + coorChange.x + "px," + coorChange.y + 'px)';
-        },1000/this.FS);
+    _startAnimation(animations) {
+        return new Promise((resolve, reject)=>{
+            const style = this._el.style;
+            this._interval = setInterval(()=>{
+                const coorChange = animations.pop();
+                if(!coorChange) {
+                    clearInterval(this._interval);
+                    resolve();
+                    return;
+                };
+                style.WebkitTransform = "translate(" + coorChange.x + "px," + coorChange.y + 'px)';
+            },1000/this._params.FS);
+        });
     }
-    getNextFsInfo(params) {
-        //return null;
-        //console.log(params);
+    _getNextFsMoveInfo(params) {
         const angle = params.moveAngle;
-        const endSpeed = params.speed - params.frictionSpeed/params.FS;
-        if(endSpeed<=0) return false;
+        let endSpeed = params.speed - params.frictionSpeed/params.FS;
+        if(endSpeed <=0 ) {
+            endSpeed = 0;
+            return;
+        };
         const averageSpeed = (params.speed + endSpeed)/2;
         params.speed = endSpeed;
         if(params.x>=params.contentWidth){
@@ -104,9 +114,13 @@ class BilliardElement extends MyEventEmitter {
             }
         }
         const distance = averageSpeed/params.FS;
+        return this._getXY(params, averageSpeed, params.moveAngle);
+    }
+    _getXY(params, speed, angle) {
         const pai = 0.017453293;
-        const y = -distance*Math.sin(params.moveAngle*pai);
-        const x = distance*Math.cos(params.moveAngle*pai);
+        const distance = speed/params.FS;
+        const y = -distance*Math.sin(angle*pai);
+        const x = distance*Math.cos(angle*pai);
         params.x += x;
         params.y += y;
         return {
@@ -114,19 +128,35 @@ class BilliardElement extends MyEventEmitter {
             y: params.y
         }
     }
-    setAnimation() {
-        let animation = [];
-        for(let i=0;i<9999999;i++) {
-            const res = this.getNextFsInfo(this.params);
+    _getAnimations(fn) {
+        let animations = [];
+        for(let i=0;i<100000;i++) {
+            const res = fn();
             if(!res) break;
-            animation.push(res);
+            animations.push(res);
         }
-        animation.reverse();
-        this._animarion = animation;
-        return animation;
+        animations.reverse();
+        //console.log(animations);
+        return animations;
     }
-    getAnimation() {
-        return this._animarion.pop();
+    _getNextFsAttractInfo(params) {
+        let angle = 0;
+        if(params.x > params.contentWidth) {
+            params.x = params.contentWidth;
+            angle = 180;
+            params.speed = -params.speed;
+        }
+        let endSpeed = params.speed + params.attractSpeed/params.FS;
+        //console.log(endSpeed);
+        if(endSpeed <=0 ) {
+            endSpeed = 0;
+            angle = 0;
+            params.speed = -params.speed;
+            return;
+        };
+        const averageSpeed = (params.speed + endSpeed)/2;
+        params.speed = endSpeed;
+        return this._getXY(params, averageSpeed, angle);
     }
 }
 

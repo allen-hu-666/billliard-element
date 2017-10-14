@@ -22,7 +22,7 @@ vue/*.sln
 
 # for angular4
 
-angular4/dist
+# angular4/dist
 angular4/tmp
 angular4/out-tsc
 
