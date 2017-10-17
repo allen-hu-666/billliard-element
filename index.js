@@ -1,5 +1,3 @@
-const { BilliardElementManager } = require('./billiard_element.manager.js');
-const { BilliardElement } = require('./billiard_element.js');
+var  BilliardElement  = require('./src/billiard-element.js');
 
-module.exports.BilliardElementManager = BilliardElementManager;
 module.exports.BilliardElement = BilliardElement;
