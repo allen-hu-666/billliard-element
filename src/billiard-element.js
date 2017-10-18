@@ -2,6 +2,26 @@ const {
     MyEventEmitter
 } = require('./my-event-emitter.js');
 
+let prefix = function() {
+    var div = document.createElement('div');
+    var cssText = '-webkit-transition:all .1s; -moz-transition:all .1s; -o-transition:all .1s; -ms-transition:all .1s; transition:all .1s;';
+    div.style.cssText = cssText;
+    var style = div.style;
+    if (style.webkitTransition) {
+        return 'WebkitTransform';
+    }
+    if (style.MozTransition) {
+        return 'MozTransform';
+    }
+    if (style.oTransition) {
+        return 'oTransform';
+    }
+    if (style.msTransition) {
+        return 'msTransform';
+    }
+    return 'transform';
+}();
+
 class TouchDrive {
     constructor(el) {
         this._el = el;
@@ -189,7 +209,7 @@ class BilliardElement extends MyEventEmitter {
         }
     }
     _updateEl(x, y) {
-        this._el.style.WebkitTransform = "translate(" + x + "px," + y + 'px)';
+        this._el.style[prefix] = "translate(" + x + "px," + y + 'px)';
         return this;
     }
     _move(animations, resolve) {

@@ -8,5 +8,5 @@ document.addEventListener('DOMContentLoaded', function () {
         y: 300,
         touchDriveCoefficient: 1
     });
-    billiard.drive(5000,0);
+    billiard.drive(5000,320);
 });
