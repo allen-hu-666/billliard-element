@@ -1,3 +1,3 @@
-var  BilliardElement  = require('./src/billiard-element.js');
+var  BilliardElement  = require('./dist/billiard-element.export.min.js');
 
-module.exports.BilliardElement = BilliardElement;
+module.exports = BilliardElement;

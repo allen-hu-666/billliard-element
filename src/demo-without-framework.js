@@ -1,6 +1,10 @@
+const BilliardElement = require('../dist/billiard-element.export.min.js').BilliardElement;
+
 document.addEventListener('DOMContentLoaded', function () {
     var billiardEl = document.getElementById('billiard-ball');
-    var billiard = new window.BilliardElement(billiardEl);
+    //console.log(window.BilliardElement);
+    var BilliardElement = window.BilliardElement;
+    var billiard = new BilliardElement(billiardEl);
     billiard.config({
         FPS: 50,
         frictionSpeed: 1000,

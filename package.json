@@ -1,15 +1,17 @@
 {
   "name": "billiard-element",
-  "description": "",
-  "version": "1.0.3",
+  "description": "you can make your element like a billiard ball",
+  "version": "1.0.6",
   "author": "elon hu",
   "private": false,
   "bugs": {
     "email": "elonhu@163.com"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config ./webpack/dev.config.js",
+    "build:web": "cross-env NODE_ENV=production webpack --progress --hide-modules --config ./webpack/prod-web.config.js",
+    "build:export": "cross-env NODE_ENV=production webpack --progress --hide-modules --config ./webpack/prod-export.config.js",
+    "build": "npm run build:web && npm run build:export"
   },
   "dependencies": {
     "@angular/core": "^4.4.5",

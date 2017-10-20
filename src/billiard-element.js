@@ -2,11 +2,13 @@ const {
     MyEventEmitter
 } = require('./my-event-emitter.js');
 
+
 let prefix = function() {
     var div = document.createElement('div');
     var cssText = '-webkit-transition:all .1s; -moz-transition:all .1s; -o-transition:all .1s; -ms-transition:all .1s; transition:all .1s;';
     div.style.cssText = cssText;
     var style = div.style;
+    console.log("asasdsasddaadasdas");
     if (style.webkitTransition) {
         return 'WebkitTransform';
     }
