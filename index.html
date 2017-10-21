@@ -10,13 +10,14 @@
         height: 100%;
         margin: 0;
       }
-      #billiard-ball {
+      .billiard-ball {
         width:50px;
         height: 50px;
         text-align: center;
         line-height: 50px;
         color: #fff;
         font-size: 14px; 
+        position: fixed;
         border-radius: 50%;
         background-color: green;
       }
@@ -24,11 +25,14 @@
   </head>
   <body>
     <div id="app">
-      <div id="billiard-ball">
-        elment
+      <div id="billiard-ball1" class="billiard-ball" style="left: 100px;top: 100px">
+        elment1
+      </div>
+      <div id="billiard-ball2" class="billiard-ball" style="bottom: 100px;right: 100px;width: 100px;">
+        elment2
       </div>
     </div>
     <script src="./dist/billiard-element.min.js"></script>
-    <script src="./dist/demo-without-framework.min.js"></script>                                                                                                                                                                                                                                   `
+    <script src="./src/demo-without-framework.js"></script>
   </body>
 </html>

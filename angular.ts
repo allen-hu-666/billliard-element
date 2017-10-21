@@ -1,1 +1,3 @@
-export { BilliardElementModule } from './src/billiard_element.module'
+export { BilliardElementModule } from './toAngular/src/app/billiard-element.module'
+
+export { BilliardElement, BilliardConfigInterface } from './index'

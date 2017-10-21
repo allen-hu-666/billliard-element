@@ -3,7 +3,6 @@ const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 commonConfig.devtool = '#source-map';
-delete commonConfig.entry['demo-without-framework'];
 // http://vue-loader.vuejs.org/en/workflow/production.html
 commonConfig.plugins = (commonConfig.plugins || []).concat([
   /* new CopyWebpackPlugin([

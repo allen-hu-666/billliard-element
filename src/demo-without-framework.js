@@ -1,16 +1,21 @@
-const BilliardElement = require('../dist/billiard-element.export.min.js').BilliardElement;
-
 document.addEventListener('DOMContentLoaded', function () {
-    var billiardEl = document.getElementById('billiard-ball');
-    //console.log(window.BilliardElement);
     var BilliardElement = window.BilliardElement;
-    var billiard = new BilliardElement(billiardEl);
-    billiard.config({
-        FPS: 50,
-        frictionSpeed: 1000,
-        x: 300,
-        y: 300,
-        touchDriveCoefficient: 1
+    
+    var el1 = document.getElementById('billiard-ball1');
+    var billiardEl1 = new BilliardElement(el1);
+    billiardEl1.setConfig({
+        moveAreaMarginLeft: 50,
+        moveAreaMarginRight: 50,
+        moveAreaMarginTop: 50,
+        moveAreaMarginBottom: 50,
     });
-    billiard.drive(5000,320);
+    billiardEl1.drive(5000,313);
+
+    var el2 = document.getElementById('billiard-ball2');
+    var billiardEL2 = new BilliardElement(el2);
+    billiardEL2.setConfig({
+        touchDriveCoefficient: 1,
+        frictionSpeed: 2000
+    });
+    billiardEL2.drive(5000,117);
 });

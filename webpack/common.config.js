@@ -2,8 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    'billiard-element': './src/billiard-element.js',
-    'demo-without-framework': './src/demo-without-framework.js',
+    'billiard-element': './src/billiard-element.js'
   },
   output: {
     libraryTarget: 'this',
