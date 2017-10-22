@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    document.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    });
+    document.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+    });
     var BilliardElement = window.BilliardElement;
     
     var el1 = document.getElementById('billiard-ball1');

@@ -15,7 +15,6 @@ class BilliardTouchDrive {
         this._y = event.changedTouches[0].clientY;
     }
     move(event) {
-        event.preventDefault();
         const x = event.changedTouches[0].clientX;
         const y = event.changedTouches[0].clientY;
         const changeX = x - this._x;
@@ -40,6 +39,7 @@ class BilliardTouchDrive {
         if (history.length > this._ALLOW_HISTORY) {
             history.shift();
         }
+        event.preventDefault();
         return this;
     }
     end(event) {

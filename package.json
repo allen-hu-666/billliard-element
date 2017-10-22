@@ -1,7 +1,7 @@
 {
   "name": "billiard-element",
   "description": "you can make your element like a billiard ball. Support angular2 and without framework.",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "elon hu",
   "private": false,
   "bugs": {
