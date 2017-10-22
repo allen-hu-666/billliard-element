@@ -51,7 +51,7 @@ billiardEl.setConfig({
 });
 billiardEl.drive(5000,320);// give a driving force
 ```
-### For angular2
+### For angular4
 ```javascript
 import { NgModule } from '@angular/core';
 import { BilliardElementModule } from 'billiard-element/angular';
@@ -84,6 +84,32 @@ export class AppComponent {
 <div [billiard-element] = "billiardConfig" (billiardElCreated) = "billiardElCreated($event)">
 </div>
 ```
+### for angularjs
+```javascript
+// import plug
+<script src="./node_modules/billiard-element/dist/billiard-element-angularjs.min.js"></script>
+// import module
+var app = angular.module('myApp', [ "billiard-element" ]);
+
+// use
+<div billiard-element></div>
+// or
+<div billiard-element="config"></div>
+
+app.controller('myCtrl', function($scope) {
+    $scope.config = {
+        moveAreaMarginLeft: 50,
+        moveAreaMarginRight: 50,
+        moveAreaMarginTop: 50,
+        moveAreaMarginBottom: 50,
+        FPS: 50,
+        billiardElCreated: function(billiardEl) {
+            // for get instance
+            billiardEl.drive(2000, 180);
+        }
+    };
+});
+```
 
 ## Method of BilliardElement Instance
 #### setConfig(config: BilliardConfigInterface): BilliardElement;
@@ -105,7 +131,7 @@ interface BilliardConfigInterface {
     moveAreaMarginLeft?: number; // default: 0
     moveAreaMarginRight?: number; // default: 0
     moveAreaMarginTop?: number; // default: 0
-    moveAreaMarginBottom?: number;
+    moveAreaMarginBottom?: number; // default: 0
     /* 
         default moving area of element is fullscreen,
         the parms above is for constom it.
