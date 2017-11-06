@@ -29,7 +29,8 @@ class BilliardElement {
         this._el = el;
         el.style.position = 'fixed';
         this._interval = null;
-        this.status = 'uninit'; // 'uninit'|'static' | 'moving'
+        this.status = 'static'; // static' | 'moving'
+        this._positionInited = false;
         this._moveStatus = {
             x:0,
             y:0,
@@ -117,7 +118,7 @@ class BilliardElement {
         return this;
     }
     updateElPosition(force = true) {
-        if(this.status!=="uninit" && !force) return;
+        if(!!this._positionInited && !force) return;
         const el = this._el;
         let s = this._moveStatus;
         let limit = this._moveStatus.limit;
@@ -129,6 +130,7 @@ class BilliardElement {
         el.style.left = "0px";
         el.style.top = "0px";
         this.status = "static";
+        this._positionInited = true
         this._updateEl(s.x, s.y);
         return this;
     }
